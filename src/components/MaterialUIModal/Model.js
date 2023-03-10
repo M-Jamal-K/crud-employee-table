@@ -69,14 +69,23 @@ export default function Model({
       alert("Change input feild to update the database");
       return;
     }
-
-    methodOptionHandler({
-      fName,
-      LName,
-      Email,
-      Salary,
-      Date: new Date().toLocaleDateString()
-    });
+    if (method === "PUT") {
+      methodOptionHandler({
+        fName,
+        LName,
+        Email,
+        Salary,
+        Date: row.Date
+      });
+    } else {
+      methodOptionHandler({
+        fName,
+        LName,
+        Email,
+        Salary,
+        Date: new Date().toLocaleDateString()
+      });
+    }
     Reset();
     setOpen(false);
     reRender();
