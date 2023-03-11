@@ -39,7 +39,7 @@ export default function Model({
       setSalary(row.Salary);
     }
     return () => {};
-  }, []);
+  }, [row]);
 
   const Reset = () => {
     setfName("");
