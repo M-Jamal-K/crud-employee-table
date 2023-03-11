@@ -72,7 +72,9 @@ const EmployeeData = ({ reRender, counter }) => {
                 <TableCell>{row.fName}</TableCell>
                 <TableCell>{row.LName}</TableCell>
                 <TableCell>{row.Email}</TableCell>
-                <TableCell>{`$${row.Salary}`}</TableCell>
+                <TableCell>{`$${Number(row.Salary).toLocaleString(
+                  "en-US"
+                )}`}</TableCell>
                 <TableCell>{row.Date}</TableCell>
                 <TableCell>
                   <Buttons id={row.id} row={row} reRender={reRender} />
