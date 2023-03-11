@@ -51,7 +51,7 @@ export default function Model({
   const { methodOptionHandler, isPending, error } = useFetch(url, method);
 
   const submitted = () => {
-    if (!fName.trim() || !LName.trim() || !Salary.trim() || !Email.trim()) {
+    if (!fName.trim() || !LName.trim() || !Salary || !Email.trim()) {
       alert("Please Fill all the inputs");
       return;
     }
@@ -131,7 +131,10 @@ export default function Model({
           <TextField
             value={Salary}
             onChange={(e) => {
-              setSalary(e.target.value);
+              const value = e.target.value;
+              if (!isNaN(value) && value > 0) {
+                setSalary(value);
+              }
             }}
             label="Salary"
             id="outlined-size-small"
