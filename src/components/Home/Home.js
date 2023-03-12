@@ -9,28 +9,14 @@ const Home = () => {
   const AddEmployee = () => {
     setOpen(true);
   };
-  // For Update Re rendering
-  const [counter, setCounter] = useState(0);
-
-  const reRender = () => {
-    setTimeout(() => {
-      setCounter((prevCounter) => prevCounter + 1);
-    }, 1000);
-  };
 
   return (
     <div className="App">
       <Button variant="contained" onClick={AddEmployee}>
         Add Employee
       </Button>
-      <Model
-        open={open}
-        setOpen={setOpen}
-        url={URL}
-        method="POST"
-        reRender={reRender}
-      />
-      <EmployeeData counter={counter} reRender={reRender} />
+      <Model open={open} setOpen={setOpen} url={URL} method="POST" />
+      <EmployeeData />
     </div>
   );
 };

@@ -5,7 +5,7 @@ import Model from "../MaterialUIModal/Model";
 import { useState } from "react";
 import { URL } from "../URL";
 
-const Buttons = ({ id, row, reRender }) => {
+const Buttons = ({ row }) => {
   const [open, setOpen] = useState(false);
   const onUpdate = (e) => {
     setOpen(true);
@@ -16,11 +16,10 @@ const Buttons = ({ id, row, reRender }) => {
     methodOptionHandler,
     isPending: delisPending,
     error: delError
-  } = useFetch(`${URL}/${id}`, "DELETE");
+  } = useFetch(`${URL}/${row.itmID}`, "DELETE");
 
   const onDelete = (e) => {
     methodOptionHandler();
-    reRender();
   };
 
   return (
@@ -35,10 +34,9 @@ const Buttons = ({ id, row, reRender }) => {
       <Model
         open={open}
         setOpen={setOpen}
-        url={`${URL}/${id}`}
+        url={`${URL}/${row.itmID}`}
         method="PUT"
         row={row}
-        reRender={reRender}
       />
 
       {delError && <p className="error">{delError}</p>}

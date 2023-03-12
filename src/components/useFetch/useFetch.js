@@ -1,6 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import { Context } from "../../App";
 
-const useFetch = (url, reqMethod = "GET", counter) => {
+const useFetch = (url, reqMethod = "GET") => {
+  const { contextValue, updateContextValue } = useContext(Context);
+
   const [data, setData] = useState(null);
   const [isPending, setisPending] = useState(null);
   const [error, setError] = useState(null);
@@ -42,6 +45,9 @@ const useFetch = (url, reqMethod = "GET", counter) => {
         setisPending(false);
         setError(null);
         setData(data);
+        if (reqMethod !== "GET") {
+          updateContextValue();
+        }
       } catch (error) {
         setisPending(false);
         setError(`Could not fetch data!!! error type --> '${error.message}'`);
@@ -54,9 +60,10 @@ const useFetch = (url, reqMethod = "GET", counter) => {
     if (reqMethod === "GET") fetchData();
 
     return () => {
-      console.log("CleaneUP");
+      setOptions(null);
     };
-  }, [url, options, reqMethod, counter]);
+  }, [url, options, reqMethod, contextValue, updateContextValue]);
+
   return {
     data,
     isPending,

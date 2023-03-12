@@ -1,10 +1,10 @@
-import * as React from "react";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import Modal from "@mui/material/Modal";
 import Button from "@mui/material/Button";
-import { useState, useEffect } from "react";
+import { useState, useContext, useEffect } from "react";
 import useFetch from "../useFetch/useFetch";
+import { Context } from "../../App";
 
 const style = {
   position: "absolute",
@@ -18,35 +18,35 @@ const style = {
   p: 4
 };
 
-export default function Model({
-  open,
-  setOpen,
-  url,
-  method,
-  row = false,
-  reRender
-}) {
+export default function Model({ open, setOpen, url, method, row = false }) {
   const [fName, setfName] = useState("");
   const [LName, setLName] = useState("");
   const [Email, setEmail] = useState("");
   const [Salary, setSalary] = useState("");
-
-  useEffect(() => {
-    if (row) {
-      setfName(row.fName);
-      setLName(row.LName);
-      setEmail(row.Email);
-      setSalary(row.Salary);
-    }
-    return () => {};
-  }, [row]);
-
+  const { contextValue } = useContext(Context);
   const Reset = () => {
     setfName("");
     setLName("");
     setEmail("");
     setSalary("");
   };
+
+  useEffect(() => {
+    Reset();
+  }, [contextValue]);
+
+  useEffect(() => {
+    if (row) {
+      setfName(row.fName);
+      setLName(row.LName);
+      setEmail(row.Email);
+      // FOR gridlayout
+      setSalary(parseInt(row.Salary.replace(/[^0-9]/g, "")));
+      // setSalary(row.Salary);
+    }
+
+    return () => {};
+  }, [row]);
 
   const { methodOptionHandler, isPending, error } = useFetch(url, method);
 
@@ -64,9 +64,10 @@ export default function Model({
       row.fName === fName &&
       row.LName === LName &&
       row.Email === Email &&
-      row.Salary === Salary
+      parseInt(row.Salary.replace(/[^0-9]/g, "")) === Salary
+      // row.Salary === Salary
     ) {
-      alert("Change input feild to update the database");
+      alert("Change input field to update the database");
       return;
     }
     if (method === "PUT") {
@@ -86,9 +87,6 @@ export default function Model({
         Date: new Date().toLocaleDateString()
       });
     }
-    Reset();
-    setOpen(false);
-    reRender();
   };
 
   return (
