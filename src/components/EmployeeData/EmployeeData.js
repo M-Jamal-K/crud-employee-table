@@ -141,7 +141,12 @@ const EmployeeData = () => {
   return (
     <div style={{ height: 500, width: "100%", marginTop: "30px" }}>
       {data && !isPending && !error && (
-        <DataGrid rows={rows} columns={columns} autoHeight />
+        <DataGrid
+          rows={rows}
+          columns={columns}
+          autoHeight
+          pageSizeOptions={[5, 10, 25, 50, 100]}
+        />
       )}
       {isPending && <Stack>{loadingSkeleton}</Stack>}
       {error && <p className="error">{error}</p>}
