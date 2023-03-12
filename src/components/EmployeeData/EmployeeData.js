@@ -97,10 +97,10 @@ import Skeleton from "@mui/material/Skeleton";
 import { URL } from "../URL";
 import { DataGrid } from "@mui/x-data-grid";
 const columns = [
-  { field: "id", headerName: "No." },
+  { field: "id", headerName: "No.", width: 10 },
   { field: "fName", headerName: "First Name", width: 150 },
   { field: "LName", headerName: "Last Name", width: 150 },
-  { field: "Email", headerName: "Email", width: 250 },
+  { field: "Email", headerName: "Email", width: 150 },
   { field: "Salary", headerName: "Salary", width: 150 },
   { field: "Date", headerName: "Date", width: 150 },
   {
@@ -139,17 +139,29 @@ const EmployeeData = () => {
     : [];
 
   return (
-    <div style={{ height: 500, width: "100%", marginTop: "30px" }}>
+    <div style={{ marginTop: "30px" }}>
       {data && !isPending && !error && (
         <DataGrid
           rows={rows}
           columns={columns}
           autoHeight
+          style={{
+            width: "fit-content",
+            paddingRight: "10px",
+            margin: "10px auto"
+          }}
           pageSizeOptions={[5, 10, 25, 50, 100]}
+          initialState={{
+            pagination: {
+              paginationModel: {
+                pageSize: 5
+              }
+            }
+          }}
         />
       )}
       {isPending && <Stack>{loadingSkeleton}</Stack>}
-      {error && <p className="error">{error}</p>}
+      {!isPending && error && <p className="error">{error}</p>}
     </div>
   );
 };
