@@ -126,7 +126,7 @@ const EmployeeData = () => {
   const { data, isPending, error } = useFetch(URL);
 
   const rows = data
-    ? data.map((row, index) => ({
+    ? data.reverse().map((row, index) => ({
         id: index + 1,
         itmID: row.id,
         fName: row.fName,
@@ -145,10 +145,10 @@ const EmployeeData = () => {
           rows={rows}
           columns={columns}
           autoHeight
-          style={{
-            width: "fit-content",
+          sx={{
             paddingRight: "10px",
-            margin: "10px auto"
+            margin: "10px auto",
+            width: "fit-content"
           }}
           pageSizeOptions={[5, 10, 25, 50, 100]}
           initialState={{
