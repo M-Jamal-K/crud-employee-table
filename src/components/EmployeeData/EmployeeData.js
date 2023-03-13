@@ -96,6 +96,7 @@ import useFetch from "../useFetch/useFetch";
 import Skeleton from "@mui/material/Skeleton";
 import { URL } from "../URL";
 import { DataGrid } from "@mui/x-data-grid";
+import { useState, useEffect } from "react";
 const columns = [
   { field: "id", headerName: "No.", width: 10 },
   { field: "fName", headerName: "First Name", width: 150 },
@@ -113,6 +114,7 @@ const columns = [
 ];
 
 const EmployeeData = () => {
+  const [reversedData, setReversedData] = useState(null);
   const loadingSkeleton = [];
   for (let i = 0; i < 7; i++) {
     loadingSkeleton.push(
@@ -125,8 +127,14 @@ const EmployeeData = () => {
   // for Getting DATA
   const { data, isPending, error } = useFetch(URL);
 
-  const rows = data
-    ? data.reverse().map((row, index) => ({
+  useEffect(() => {
+    if (data) {
+      setReversedData(data.reverse());
+    }
+  }, [data]);
+
+  const rows = reversedData
+    ? reversedData.map((row, index) => ({
         id: index + 1,
         itmID: row.id,
         fName: row.fName,
@@ -148,13 +156,13 @@ const EmployeeData = () => {
           sx={{
             paddingRight: "10px",
             margin: "10px auto",
-            width: "fit-content"
+            maxWidth: "fit-content"
           }}
-          pageSizeOptions={[5, 10, 25, 50, 100]}
+          pageSizeOptions={[5, 8, 10, 25, 50, 100]}
           initialState={{
             pagination: {
               paginationModel: {
-                pageSize: 5
+                pageSize: 8
               }
             }
           }}
